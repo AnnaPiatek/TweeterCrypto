@@ -6,7 +6,8 @@ import numpy as np
 import datetime
 
 '''import data from tweeter'''
-tweets_data_path = ''
+tweets_data_path = 'C:/Users/Anna/Documents/STUDIA/semestr 6/kaggle/TwittCrypto/twitter.txt'
+# tweets_data_path = 'C:/Users/Anna/Documents/STUDIA/semestr 6/kaggle/twitter_data1.txt'
 tweets_data = []
 tweets_file = open(tweets_data_path, "r")
 for line in tweets_file:
@@ -27,10 +28,11 @@ labels, values = zip(*sorted(zip(labels, values)))
 '''plot'''
 indexes = np.arange(len(labels))
 width = 1
-plt.xlabel('time', fontsize=10,fontname='Arial')
-plt.ylabel('tweets',fontsize=10,fontname='Arial')
-plt.title('BTC tweets / hour', fontsize=15, fontweight='bold',fontname='Arial')
-plt.bar(indexes, values, width, color='lightblue')
-plt.xticks(indexes + width * 0.5, labels)
-plt.show()
-
+plt.xlabel('time', fontsize=5,fontname='Arial')
+plt.ylabel('tweets',fontsize=15,fontname='Arial', rotation='horizontal')
+plt.title('BTC tweets / minute', fontsize=20, fontweight='bold',fontname='Arial')
+plt.plot(indexes, values, color='lightblue')
+# plt.plot(indexes, values,width, color='lightblue')
+plt.xticks(indexes+width*0.5, labels,rotation=70)
+# plt.show()
+# print(tweets_file.head())
