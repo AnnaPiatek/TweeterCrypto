@@ -9,12 +9,23 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import numpy as np
 import datetime
+import MySQLdb
+
+
+db = MySQLdb.connect(host='localhost', user='root', passwd='', db='twitter')
+myCursor = db.cursor()
 
 #Variables that contains the user credentials to access Twitter API
 access_token = ''
 access_token_secret = ''
 consumer_key = ''
 consumer_secret = ''
+
+
+def clear_all():
+    myCursor.execute("""DELETE FROM btc""")
+    print 'clear all..'
+
 def disconnect(self):
     if self.running is False:
         return
@@ -34,6 +45,8 @@ class StdOutListener(StreamListener):
             values = list(values)
             print(labels)
             print(values)
+            for i in range(0, len(labels)):
+                myCursor.execute("""INSERT INTO btc VALUES (%s, %s);""", (labels[i], values[i]))
             return twittlist
 
 
@@ -44,4 +57,6 @@ auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 stream = Stream(auth, l)
 stream.filter(track=['bitcoin', 'btc'])
+db.commit()
+db.close()
 
